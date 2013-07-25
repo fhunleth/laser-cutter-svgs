@@ -5,14 +5,15 @@
 ## Inputs
 #set $t=3  ## Material thickness in mm
 
-#set $baseLength=139.5
-#set $baseWidth=80
-#set $boxHeight=100
+#set $bbbWidth=86.36
+#set $bbbHeight=54.61
+
 #set $standoffHeight=6.3
 #set $mountingHoleRadius=1.5875
-#set $lensHolderRadius=15.5  ## M12 is 15.5; CS-mount is 31
+#set $lensHolderDiameter=15.5  ## M12 is 15.5; CS-mount is 31
 #set $lensHolderBaseHeight=7.25
 #set $bbbAndCapePcbHeight=15.5 ## This is from the bottom of the BBB PCB to the top of the cape PCB (no components)
+#set $extraHeight=2
 
 ## The camera center is in the same coordinate space as the mounting holes.
 ## This is the offset from the top left of the bbb with the Ethernet pointing left.
@@ -22,6 +23,10 @@
 #set bbbGap=3  ## gap around all sides of the bbb PCB
 
 ## Calculated 
+#set $baseWidth=bbbWidth+2*bbbGap
+#set $baseHeight=bbbHeight+2*bbbGap
+#set $lensHolderRadius=lensHolderDiameter/2
+#set $boxHeight=bbbAndCapePcbHeight+standoffHeight+lensHolderBaseHeight+extraHeight
 
 <!-- viewBox width and height of the output width and height in mm -->
 <svg xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +41,7 @@
 
       /* Parameters for cutting things out */
       .cut {
-        stroke: red;
+        stroke: black; /*black for epilog, red for universal */
 	stroke-width: 0.1;
         vector-effect: non-scaling-stroke;
 	fill: none;
@@ -67,45 +72,82 @@
       <circle class="cut" cx="80.645" cy="48.26" r="$mountingHoleRadius"/>
     </g>
 
+    <g id="TopAndBottom">
+      <path class="cut" d="M0,0
+		l$t,0
+		l10,0
+		l0,$t l10,0 l0,-$t
+		l${baseWidth-40},0
+		l0,$t l10,0 l0,-$t
+		l10,0
+		l$t,0
+
+		l0,$t
+		l0,10
+		l-$t,0 l0,10 l$t,0
+		l0,${baseHeight-40}
+		l-$t,0 l0,10 l$t,0
+		l0,10
+		l0,$t
+
+		l-$t,0
+		l-10,0
+		l0,-$t l-10,0 l0,$t
+		l-${baseWidth-40},0
+		l0,-$t l-10,0 l0,$t
+		l-10,0
+		l-$t,0
+
+		l0,-$t
+		l0,-10
+		l$t,0 l0,-10 l-$t,0
+		l0,-${baseHeight-40}
+		l$t,0 l0,-10 l-$t,0
+		l0,-10
+		l0,-$t"
+      />
+    </g>
+
     <g id="Top">
-      <path class="cut" d="M0,0
-
-      <rect class="cut" x="0" y="0" width="$baseLength" height="$baseWidth"/>
-      <rect class="cut" x="$holder1OffsetLeft" y="10" width="$t" height="10"/>
-      <rect class="cut" x="$holder1OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
-      <rect class="cut" x="$holder2OffsetLeft" y="10" width="$t" height="10"/>
-      <rect class="cut" x="$holder2OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
+      <use x="0" y="0" xlink:href="#TopAndBottom"/>
+      <circle class="cut" cx="${t+bbbGap+cameraCenterX}" cy="${t+bbbGap+cameraCenterY}" r="$lensHolderRadius"/>
     </g>
 
-    <g id="Holder">
-      <path class="cut" d="M0,0
-		l$grooveSpacing,0
-		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
-		l$grooveSpacing,0
-		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
-		l$grooveSpacing,0
-	
-		l0,$holderHeight
-
-		l-10,0
-		l0,$t
-		l-10,0
-		l0,-$t
-		l${-(holderWidth-40)},0
-		l0,$t
-		l-10,0
-		l0,-$t
-		l-10,0
-
-		z" />
+    <g id="Base">
+      <use x="0" y="0" xlink:href="#TopAndBottom"/>
+      <use x="${t+bbbGap}" y="${t+bbbGap}" xlink:href="#MountingHoles"/>
     </g>
 
+    <g id="LeftAndRight">
+      <path class="cut" d="M0,$t
+		l$t,0
+		l10,0
+		l0,-$t l10,0 l0,$t
+		l${baseWidth-40},0
+		l0,-$t l10,0 l0,$t
+		l10,0
+		l$t,0
+
+		l0,${boxHeight}
+
+		l-$t,0
+		l-10,0
+		l0,$t l-10,0 l0,-$t
+		l-${baseWidth-40},0
+		l0,$t l-10,0 l0,-$t
+		l-10,0
+		l-$t,0
+		
+		z"
+	/>
+    </g>
   </defs>
 
   <g transform="translate(10,10)"> 
-    <use x="0" y="0" xlink:href="#Base"/>
-    <use x="0" y="${baseWidth+t}" xlink:href="#Holder"/>
-    <use x="0" y="${baseWidth+t+holderHeight+t+t}" xlink:href="#Holder"/>
+    <use x="0" y="0" xlink:href="#Top"/>
+    <use x="0" y="${baseHeight+t+t+t}" xlink:href="#Base"/>
+    <use x="0" y="${2*(baseHeight+t+t+t) + t}" xlink:href="#LeftAndRight"/>
+    <use x="0" y="${2*(baseHeight+t+t+t) + t + (2*t+boxHeight) + t}" xlink:href="#LeftAndRight"/>
   </g>
 
 </svg> 
