@@ -1,0 +1,111 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+## Inputs
+#set $t=3  ## Material thickness in mm
+
+#set $baseLength=139.5
+#set $baseWidth=80
+#set $boxHeight=100
+#set $standoffHeight=6.3
+#set $mountingHoleRadius=1.5875
+#set $lensHolderRadius=15.5  ## M12 is 15.5; CS-mount is 31
+#set $lensHolderBaseHeight=7.25
+#set $bbbAndCapePcbHeight=15.5 ## This is from the bottom of the BBB PCB to the top of the cape PCB (no components)
+
+## The camera center is in the same coordinate space as the mounting holes.
+## This is the offset from the top left of the bbb with the Ethernet pointing left.
+#set $cameraCenterX=37.922
+#set $cameraCenterY=27.305
+
+#set bbbGap=3  ## gap around all sides of the bbb PCB
+
+## Calculated 
+
+<!-- viewBox width and height of the output width and height in mm -->
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	version="1.2" 
+	width="24in" 
+	height="12in"
+        viewBox="0 0 609.6 304.8">
+
+  <style type="text/css">
+    <![CDATA[
+
+      /* Parameters for cutting things out */
+      .cut {
+        stroke: red;
+	stroke-width: 0.1;
+        vector-effect: non-scaling-stroke;
+	fill: none;
+      }
+    ]]>
+  </style>
+  <defs>
+    <g id="MountingHoles">
+      <desc>Mounting holes. Origin is upper left.
+
+            ------------------------------------
+            |                                  |
+            |                                  |
+            -----                              |
+            |   | Ethernet                     |
+            -----                              |
+            |                              ----|
+            OOO Power                  USB |   |
+            |                              ----|
+            ------------------------------------
+
+            where the Ethernet is coming out the left side.
+      </desc>
+
+      <circle class="cut" cx="14.605" cy="3.175" r="$mountingHoleRadius"/>
+      <circle class="cut" cx="14.605" cy="51.435" r="$mountingHoleRadius"/>
+      <circle class="cut" cx="80.645" cy="6.35" r="$mountingHoleRadius"/>
+      <circle class="cut" cx="80.645" cy="48.26" r="$mountingHoleRadius"/>
+    </g>
+
+    <g id="Top">
+      <path class="cut" d="M0,0
+
+      <rect class="cut" x="0" y="0" width="$baseLength" height="$baseWidth"/>
+      <rect class="cut" x="$holder1OffsetLeft" y="10" width="$t" height="10"/>
+      <rect class="cut" x="$holder1OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
+      <rect class="cut" x="$holder2OffsetLeft" y="10" width="$t" height="10"/>
+      <rect class="cut" x="$holder2OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
+    </g>
+
+    <g id="Holder">
+      <path class="cut" d="M0,0
+		l$grooveSpacing,0
+		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
+		l$grooveSpacing,0
+		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
+		l$grooveSpacing,0
+	
+		l0,$holderHeight
+
+		l-10,0
+		l0,$t
+		l-10,0
+		l0,-$t
+		l${-(holderWidth-40)},0
+		l0,$t
+		l-10,0
+		l0,-$t
+		l-10,0
+
+		z" />
+    </g>
+
+  </defs>
+
+  <g transform="translate(10,10)"> 
+    <use x="0" y="0" xlink:href="#Base"/>
+    <use x="0" y="${baseWidth+t}" xlink:href="#Holder"/>
+    <use x="0" y="${baseWidth+t+holderHeight+t+t}" xlink:href="#Holder"/>
+  </g>
+
+</svg> 
