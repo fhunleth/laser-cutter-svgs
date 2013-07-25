@@ -6,18 +6,23 @@
 #set $t=3  ## Material thickness in mm
 #set $baseLength=270
 #set $baseWidth=65
+#set $baseCornerRadius=7
 #set $holderSeparation=84   ## distance between holders
-#set $holderHeight=20
-#set $grooveDiameter=19
+#set $holderHeight=40
+#set $grooveDiameter=15.875
+#set $frontShelfOffset=6
+#set $frontShelfDepth=25.4
+#set $frontShelfLipHeight=9
 
 ## Calculated 
 #set $holder1OffsetLeft=baseLength/2-holderSeparation/2-t
 #set $holder2OffsetLeft=baseLength/2+holderSeparation/2-t
 #set $holderWidth=baseWidth
-#set $grooveSpacing=(baseWidth-2*grooveDiameter)/3
-#set $groove1Offset=grooveSpacing
-#set $groove2Offset=baseWidth-grooveSpacing-grooveDiameter
+#set $frontShelfHeight=holderHeight/3
 #set $grooveRadius=grooveDiameter/2
+#set $groovePadding=(baseWidth-frontShelfOffset-frontShelfDepth)/2-grooveRadius
+#set $grooveOffset=(baseWidth-frontShelfOffset-frontShelfDepth)/2-grooveRadius+frontShelfOffset+frontShelfDepth
+#set $cornerRadius=frontShelfOffset/2
 
 <!-- viewBox width and height of the output width and height in mm -->
 <svg xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +46,7 @@
   </style>
   <defs>
     <g id="Base">
-      <rect class="cut" x="0" y="0" width="$baseLength" height="$baseWidth"/>
+      <rect class="cut" rx="$baseCornerRadius" ry="$baseCornerRadius" x="0" y="0" width="$baseLength" height="$baseWidth"/>
       <rect class="cut" x="$holder1OffsetLeft" y="10" width="$t" height="10"/>
       <rect class="cut" x="$holder1OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
       <rect class="cut" x="$holder2OffsetLeft" y="10" width="$t" height="10"/>
@@ -49,13 +54,20 @@
     </g>
 
     <g id="Holder">
-      <path class="cut" d="M0,0
-		l$grooveSpacing,0
-		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
-		l$grooveSpacing,0
-		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
-		l$grooveSpacing,0
+      <path class="cut" d="M0,$holderHeight
+		l 0,-${frontShelfHeight+frontShelfLipHeight-frontShelfOffset}
+		a${frontShelfOffset/2},${frontShelfOffset/2} 0 0,1 $frontShelfOffset,0
+		l0,${frontShelfLipHeight-frontShelfOffset}
+
+		l$frontShelfDepth,0
 	
+		l0,-$(holderHeight-frontShelfHeight-cornerRadius)
+		a$cornerRadius,$cornerRadius 0 0,1 $cornerRadius,-$cornerRadius
+
+		l${groovePadding-cornerRadius},0
+		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
+		l$groovePadding,0
+
 		l0,$holderHeight
 
 		l-10,0
@@ -66,7 +78,6 @@
 		l0,$t
 		l-10,0
 		l0,-$t
-		l-10,0
 
 		z" />
     </g>
