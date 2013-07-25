@@ -1,0 +1,78 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!-- viewBox width and height of the output width and height in mm -->
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	version="1.2" 
+	width="24in" 
+	height="18in"
+        viewBox="0 0 609.6 457.2">
+
+  <style type="text/css">
+    <![CDATA[
+
+      /* Parameters for cutting things out */
+      .cut {
+        stroke: red;
+	stroke-width: 0.1;
+        vector-effect: non-scaling-stroke;
+	fill: none;
+      }
+    ]]>
+  </style>
+  <defs>
+    <g id="Octogon9mm">
+      <g transform="rotate(22.5) scale(4.5)">
+        <polygon points="0.923879533,0.382683432 0.382683432,0.923879533 -0.382683432,0.923879533 -0.92387533,0.382683432 -0.92387533,-0.382683432 -0.382683432,-0.923879533 0.382683432,-0.923879533 0.923879533,-0.382683432"/>
+      </g>
+    </g>
+
+    <g id="OctogonRow">
+      <use x="0"  y="0" xlink:href="#Octogon9mm"/>
+      <use x="18" y="0" xlink:href="#Octogon9mm"/>
+      <use x="36" y="0" xlink:href="#Octogon9mm"/>
+      <use x="54" y="0" xlink:href="#Octogon9mm"/>
+      <use x="72" y="0" xlink:href="#Octogon9mm"/>
+      <use x="90" y="0" xlink:href="#Octogon9mm"/>
+      <use x="108" y="0" xlink:href="#Octogon9mm"/>
+    </g>
+
+    <g id="OctogonGrid" transform="translate(4.5,4.5)">
+      <use x="0"  y="0"  xlink:href="#OctogonRow"/>
+      <use x="0"  y="18" xlink:href="#OctogonRow"/>
+      <use x="0"  y="36" xlink:href="#OctogonRow"/>
+    </g>
+
+    <g id="TopSurface">
+      <desc>Top surface of the holder</desc>
+      <!-- rect class="cut" x="0" y="0" width="135" height="63"/ -->
+      <polygon class="cut" points="0,0 135,0
+		135,10 132,10 132,20 135,20
+		135,43 132,43 132,53 135,53 135,63
+		0,63 0,53 3,53 3,43 0,43
+		0,20 3,20 3,10, 0,10"/>
+      <use class="cut" x="9" y="9" xlink:href="#OctogonGrid"/>
+    </g>
+
+    <g id="SideSurface">
+      <polygon class="cut" points="
+		3,0 3,10 0,10 0,20 3,20
+		3,43 0,43 0,53 3,53 3,63
+		99,63 99,0 89,0 89,3 79,3 79,0" />
+    </g>
+
+    <g id="Brace">
+      <rect class="cut" x="0" y="0" width="135" height="10"/>
+    </g>
+  </defs>
+
+  <g transform="translate(10,10)"> 
+    <use x="0" y="0" xlink:href="#TopSurface"/>
+    <use x="0" y="66" xlink:href="#SideSurface"/>
+    <use x="0" y="132" xlink:href="#SideSurface"/>
+    <use x="0" y="198" xlink:href="#Brace"/>
+  </g>
+
+</svg> 
