@@ -1,5 +1,5 @@
 
-TARGETS=wiha-holder.svg
+TARGETS=wiha-holder.svg toothbrush-holder.svg
 
 all: $(TARGETS)
 

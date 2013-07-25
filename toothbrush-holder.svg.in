@@ -1,0 +1,82 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+## Inputs
+#set $t=3  ## Material thickness in mm
+#set $baseLength=270
+#set $baseWidth=65
+#set $holderSeparation=84   ## distance between holders
+#set $holderHeight=20
+#set $grooveDiameter=19
+
+## Calculated 
+#set $holder1OffsetLeft=baseLength/2-holderSeparation/2-t
+#set $holder2OffsetLeft=baseLength/2+holderSeparation/2-t
+#set $holderWidth=baseWidth
+#set $grooveSpacing=(baseWidth-2*grooveDiameter)/3
+#set $groove1Offset=grooveSpacing
+#set $groove2Offset=baseWidth-grooveSpacing-grooveDiameter
+#set $grooveRadius=grooveDiameter/2
+
+<!-- viewBox width and height of the output width and height in mm -->
+<svg xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	version="1.2" 
+	width="24in" 
+	height="12in"
+        viewBox="0 0 609.6 304.8">
+
+  <style type="text/css">
+    <![CDATA[
+
+      /* Parameters for cutting things out */
+      .cut {
+        stroke: red;
+	stroke-width: 0.1;
+        vector-effect: non-scaling-stroke;
+	fill: none;
+      }
+    ]]>
+  </style>
+  <defs>
+    <g id="Base">
+      <rect class="cut" x="0" y="0" width="$baseLength" height="$baseWidth"/>
+      <rect class="cut" x="$holder1OffsetLeft" y="10" width="$t" height="10"/>
+      <rect class="cut" x="$holder1OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
+      <rect class="cut" x="$holder2OffsetLeft" y="10" width="$t" height="10"/>
+      <rect class="cut" x="$holder2OffsetLeft" y="${baseWidth-20}" width="$t" height="10"/>
+    </g>
+
+    <g id="Holder">
+      <path class="cut" d="M0,0
+		l$grooveSpacing,0
+		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
+		l$grooveSpacing,0
+		a$grooveRadius,$grooveRadius 0 0,0 $grooveDiameter,0
+		l$grooveSpacing,0
+	
+		l0,$holderHeight
+
+		l-10,0
+		l0,$t
+		l-10,0
+		l0,-$t
+		l${-(holderWidth-40)},0
+		l0,$t
+		l-10,0
+		l0,-$t
+		l-10,0
+
+		z" />
+    </g>
+
+  </defs>
+
+  <g transform="translate(10,10)"> 
+    <use x="0" y="0" xlink:href="#Base"/>
+    <use x="0" y="${baseWidth+t}" xlink:href="#Holder"/>
+    <use x="0" y="${baseWidth+t+holderHeight+t+t}" xlink:href="#Holder"/>
+  </g>
+
+</svg> 
