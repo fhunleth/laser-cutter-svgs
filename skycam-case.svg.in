@@ -14,6 +14,10 @@
 #set $lensHolderBaseHeight=7.25
 #set $bbbAndCapePcbHeight=15.5 ## This is from the bottom of the BBB PCB to the top of the cape PCB (no components)
 #set $extraHeight=2
+#set $bbbEthernetWidth=17.78
+#set $bbbEthernetHeight=13.4
+#set $bbbPowerWidth=9
+#set $bbbPowerHeight=11
 
 ## The camera center is in the same coordinate space as the mounting holes.
 ## This is the offset from the top left of the bbb with the Ethernet pointing left.
@@ -21,6 +25,8 @@
 #set $cameraCenterY=27.305
 
 #set bbbGap=3  ## gap around all sides of the bbb PCB
+
+#set $bbbPcbThickness=1.5
 
 ## Calculated 
 #set $baseWidth=bbbWidth+2*bbbGap
@@ -141,6 +147,34 @@
 		z"
 	/>
     </g>
+
+    <g id="Front">
+      <path class="cut" d="M0,$t
+		l10,0
+		l0,-$t l10,0 l0,$t
+		l${baseHeight-40},0
+		l0,-$t l10,0 l0,$t
+		l10,0
+	
+		l0,${boxHeight}
+
+		l-10,0
+		l0,$t l-10,0 l0,-$t
+		l-${baseHeight-40},0
+		l0,$t l-10,0 l0,-$t
+		l-10,0
+
+		z"
+	/>
+    </g>
+
+
+    <g id="Back">
+      <use x="0" y="0" xlink:href="#Front"/>
+
+      <rect class="cut" x="${12.7}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbEthernetHeight-0.9}" width="${bbbEthernetWidth}" height="${bbbEthernetHeight+1.8}"/>
+      <rect class="cut" x="${40.905-0.9}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbPowerHeight-0.9}" width="${bbbPowerWidth+1.8}" height="${bbbPowerHeight+1.8}"/>
+    </g>
   </defs>
 
   <g transform="translate(10,10)"> 
@@ -148,6 +182,9 @@
     <use x="0" y="${baseHeight+t+t+t}" xlink:href="#Base"/>
     <use x="0" y="${2*(baseHeight+t+t+t) + t}" xlink:href="#LeftAndRight"/>
     <use x="0" y="${2*(baseHeight+t+t+t) + t + (2*t+boxHeight) + t}" xlink:href="#LeftAndRight"/>
+
+    <use x="${baseWidth+t+t+t}" y="0" xlink:href="#Front"/>
+    <use x="${baseWidth+t+t+t}" y="${boxHeight+t+t+t}" xlink:href="#Back"/>
   </g>
 
 </svg> 
