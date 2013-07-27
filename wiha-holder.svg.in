@@ -2,6 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
+#from util import util
+
 ## Material thickness in mm
 #set $t=3
 
@@ -27,9 +29,7 @@
   </style>
   <defs>
     <g id="Octogon9mm">
-      <g transform="rotate(22.5) scale(4.5)">
-        <polygon points="0.923879533,0.382683432 0.382683432,0.923879533 -0.382683432,0.923879533 -0.92387533,0.382683432 -0.92387533,-0.382683432 -0.382683432,-0.923879533 0.382683432,-0.923879533 0.923879533,-0.382683432"/>
-      </g>
+      $util.octagon("", 4.5, 0)
     </g>
 
     <g id="OctogonRow">

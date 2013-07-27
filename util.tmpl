@@ -1,0 +1,12 @@
+
+#import math
+
+#@staticmethod
+#def octagon($attrs, $radius, $angleInRadians)
+<polygon $attrs points="
+#for $i in range(8)
+	${radius * math.cos(angleInRadians + i * math.pi / 4)},${radius * math.sin(angleInRadians + i * math.pi / 4)}
+#end for
+"/>
+#end def
+
