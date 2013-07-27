@@ -13,7 +13,7 @@
 	version="1.2" 
 	width="24in" 
 	height="12in"
-        viewBox="0 0 609.6 304.8">
+        viewBox="0 0 $util.inches2mm(24) $util.inches2mm(12)">
 
   <style type="text/css">
     <![CDATA[
