@@ -1,17 +1,89 @@
+##
+## Utility methods to make creating svg files for 
+## the laser cutter easier to make.
+##
 
 #import math
 
+##
+## inches2mm(inches)
+##  - converts the value passed in from inches to mm
+##
 #@staticmethod
 #def inches2mm($inches)
 #return inches * 25.4
 #end def
 
+##
+## length2mm(length)
+##   - converts the length string into mm
+##
+## length	a string containing a number and optional units (e.g. 5in)
+##
 #@staticmethod
-#def octagon($attrs, $radius, $angleInRadians)
-<polygon $attrs points="
+#def length2mm($length)
+    #if $length.endswith("in")
+        #return util.inches2mm(float($length[:-2]))
+    #else if $length.endswidth("mm")
+        #return float($length[:-2])
+    #else if $length.endswith("cm")
+        #return float($length[:-2])*10
+    #else
+        #return float($length)
+    #end if
+#end def
+
+##
+## svg(page_width, page_height)
+##   - create the svg tag for the specified build area
+##
+## page_width	the width of the build area ("24in") 
+## page_height	the height of the build area ("12in") 
+##
+#@staticmethod
+#def svg(page_width, page_height)
+svg xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" 
+        version="1.1"
+        width="$page_width"
+        height="$page_height"
+        viewBox="0 0 ${util.length2mm(page_width)} ${util.length2mm(page_height)}"
+#end def
+
+##
+## style()
+##   - inserts the SVG styling needed for setting the cutting parameters
+##
+#@staticmethod
+#def style()
+style type="text/css">
+    <![CDATA[
+
+      /* Parameters for cutting things out */
+      .cut {
+        stroke: red;
+        stroke-width: 0.1;
+        vector-effect: non-scaling-stroke;
+        fill: none;
+      }
+    ]]>
+  </style#slurp
+#end def
+
+
+##
+## octagon(attrs, radius, angle)
+##   - creates an SVG polygon that's the shape of a regular octogon
+##
+## radius the distance from the center to each vertex
+## angle  the angle of the octogon should be rotated (0 = 1st vertex is on the x axis)
+##
+#@staticmethod
+#def octagon($radius, $angleInRadians)
+polygon points="
 #for $i in range(8)
 	${radius * math.cos(angleInRadians + i * math.pi / 4)},${radius * math.sin(angleInRadians + i * math.pi / 4)}
 #end for
-"/>
+"
 #end def
 

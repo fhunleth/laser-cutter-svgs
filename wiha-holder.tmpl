@@ -8,29 +8,12 @@
 #set $t=3
 
 <!-- viewBox width and height of the output width and height in mm -->
-<svg xmlns="http://www.w3.org/2000/svg"
-	xmlns:xlink="http://www.w3.org/1999/xlink" 
-	version="1.2" 
-	width="24in" 
-	height="12in"
-        viewBox="0 0 $util.inches2mm(24) $util.inches2mm(12)">
+<$util.svg("24in", "12in")>
 
-  <style type="text/css">
-    <![CDATA[
+  <$util.style>
 
-      /* Parameters for cutting things out */
-      .cut {
-        stroke: red;
-	stroke-width: 0.1;
-        vector-effect: non-scaling-stroke;
-	fill: none;
-      }
-    ]]>
-  </style>
   <defs>
-    <g id="Octogon9mm">
-      $util.octagon("", 4.5, 0)
-    </g>
+    <$util.octagon(4.5, 0) id="Octogon9mm"/>
 
     <g id="OctogonRow">
       <use x="0"  y="0" xlink:href="#Octogon9mm"/>
