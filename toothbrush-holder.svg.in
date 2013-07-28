@@ -15,8 +15,8 @@
 #set $frontShelfLipHeight=9
 
 ## Calculated 
-#set $holder1OffsetLeft=baseLength/2-holderSeparation/2-t
-#set $holder2OffsetLeft=baseLength/2+holderSeparation/2-t
+#set $holder1OffsetLeft=baseLength/2-holderSeparation/2-t/2
+#set $holder2OffsetLeft=baseLength/2+holderSeparation/2-t/2
 #set $holderWidth=baseWidth
 #set $frontShelfHeight=holderHeight/3
 #set $grooveRadius=grooveDiameter/2
