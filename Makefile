@@ -1,5 +1,5 @@
 
-TARGETS=wiha-holder.svg toothbrush-holder.svg skycam-case.svg
+TARGETS=wiha-holder.svg toothbrush-holder.svg skycam-case.svg beam-splitter-holder.svg
 PNG_TARGETS=$(TARGETS:.svg=.png)
 
 all: $(TARGETS)

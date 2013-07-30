@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+#from util import util
+
+## Inputs
+#set $t=3  ## Material thickness in mm
+#set $sideLength=30
+#set $ledHoleRadius=1.5
+#set $cameraHoleRadius=7
+
+<$util.svg("24in", "12in")>
+
+  <$util.style>
+
+  <defs>
+    <g id="LedSide">
+      <path class="cut" d="M0,0
+		l $sideLength,0
+
+		l 0,6
+		l $t,0 l 0,6 l -$t,0
+		l 0,6
+		l $t,0 l 0,6 l -$t,0
+		l 0,6
+
+		l -$sideLength,0
+	
+		z"/>
+      <circle class="cut" cx="${sideLength/2}" cy="${sideLength/2}" r="$ledHoleRadius"/>
+    </g>
+
+    <g id="CameraSide">
+      <path class="cut" d="M0,0
+		l ${sideLength+t},0
+
+		l 0,6
+		l -$t,0 l 0,6 l $t,0
+		l 0,6
+		l -$t,0 l 0,6 l $t,0
+		l 0,6
+
+		l -${sideLength+t},0
+	
+		z"/>
+      <circle class="cut" cx="${sideLength/2}" cy="${sideLength/2}" r="$cameraHoleRadius"/>
+    </g>
+
+  </defs>
+
+  <g transform="translate(10,10)"> 
+    <use x="0" y="0" xlink:href="#LedSide"/>
+    <use x="0" y="${sideLength+t}" xlink:href="#CameraSide"/>
+  </g>
+
+</svg> 
