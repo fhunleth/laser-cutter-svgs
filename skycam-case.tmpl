@@ -16,8 +16,8 @@
 #set $lensHolderBaseHeight=7.25
 #set $bbbAndCapePcbHeight=15.5 ## This is from the bottom of the BBB PCB to the top of the cape PCB (no components)
 #set $extraHeight=2
-#set $bbbEthernetWidth=17.78
-#set $bbbEthernetHeight=13.4
+#set $bbbEthernetWidth=16.5
+#set $bbbEthernetHeight=13.5
 #set $bbbPowerWidth=9
 #set $bbbPowerHeight=11
 
@@ -158,8 +158,9 @@
     <g id="Back">
       <use x="0" y="0" xlink:href="#Front"/>
 
-      <rect class="cut" x="${12.7}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbEthernetHeight-0.9}" width="${bbbEthernetWidth}" height="${bbbEthernetHeight+1.8}"/>
-      <rect class="cut" x="${40.905-0.9}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbPowerHeight-0.9}" width="${bbbPowerWidth+1.8}" height="${bbbPowerHeight+1.8}"/>
+      <rect class="cut" x="${19.3}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbEthernetHeight}" width="${bbbEthernetWidth}" height="${bbbEthernetHeight}"/>
+      <rect class="cut" x="${43.5}" y="${t+boxHeight-bbbPcbThickness-standoffHeight-bbbPowerHeight}" width="${bbbPowerWidth}" height="${bbbPowerHeight}"/>
+      <circle class="cut" cx="${9.6}" cy="${t+boxHeight/2}" r="2.5"/>
     </g>
   </defs>
 

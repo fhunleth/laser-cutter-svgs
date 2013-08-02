@@ -7,6 +7,9 @@
 ## Material thickness in mm
 #set $t=3
 
+#set $shelfHeight=83
+#set $shelfWidth=135
+
 <$util.svg("24in", "12in")>
 
   <$util.style>
@@ -43,14 +46,14 @@
 
     <g id="SideSurface">
       <polygon class="cut" points="
-		3,0 3,10 0,10 0,20 3,20
-		3,43 0,43 0,53 3,53 3,63
-		99,63 99,0 89,0 89,3 79,3 79,0" />
+		$t,0 $t,10 0,10 0,20 $t,20
+		$t,43 0,43 0,53 $t,53 $t,63
+		$shelfHeight,63 $shelfHeight,0 ${shelfHeight-10},0 ${shelfHeight-10},$t ${shelfHeight-20},$t ${shelfHeight-20},0" />
     </g>
 
     <g id="Brace">
       <polygon class="cut" points="
-		$t,0 ${135-t},0 ${135-t},$t 135,$t 135,13 ${135-t},13 ${135-t},16 $t,16 $t,13 0,13 0,$t $t,$t"
+		$t,0 ${shelfWidth-t},0 ${shelfWidth-t},$t $shelfWidth,$t $shelfWidth,13 ${shelfWidth-t},13 ${shelfWidth-t},16 $t,16 $t,13 0,13 0,$t $t,$t"
       />
     </g>
   </defs>
